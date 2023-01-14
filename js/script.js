@@ -3,6 +3,8 @@ const tbody = document.querySelector('.tbody')
 const url = 'https://pokeapi.co/api/v2/berry/1/'
 let carrito = []
 
+//Inicio Boton Home
+
 fetch(url)
 .then(Response => Response.json())
 .then(data => {
@@ -12,13 +14,20 @@ fetch(url)
 
 }).catch(err=>console.log("error"))
 
+//Escucha los eventos
+
 const comprarButton = document.querySelector(".comprarButton");
 comprarButton.addEventListener("click", comprarButtonClicked)
+
+
+//Escucha el de cualquier producto
 
 Clickbutton.forEach(btn => {
   btn.addEventListener('click', addToCarritoItem)
 })
 
+
+//Agarra la Informacion del Item que se agrego al carrito
 
 function addToCarritoItem(e){
   const button = e.target
@@ -26,6 +35,8 @@ function addToCarritoItem(e){
   const itemTitle = item.querySelector('.card-title').textContent;
   const itemPrice = item.querySelector('.precio').textContent;
   const itemImg = item.querySelector('.card-img-top').src;
+
+  //Genera el nuevo carrito 
   
   const newItem = {
     title: itemTitle,
@@ -40,12 +51,16 @@ function addToCarritoItem(e){
 
 function addItemCarrito(newItem){
 
+  //Notificacion de se agrego al carrito
+
   const alert = document.querySelector('.alert')
 
   setTimeout( function(){
     alert.classList.add('hide')
   }, 2000)
     alert.classList.remove('hide')
+
+    //Verifica si el item que se quiere agregar ya esta en el carrito o no
 
   const InputElemnto = tbody.getElementsByClassName('input__elemento')
   for(let i =0; i < carrito.length ; i++){
@@ -63,6 +78,8 @@ function addItemCarrito(newItem){
   renderCarrito()
 } 
 
+
+//Actualiza el carrito
 
 function renderCarrito(){
   tbody.innerHTML = ''
@@ -92,6 +109,8 @@ function renderCarrito(){
   CarritoTotal()
 }
 
+//Saca el valor total del Carrito
+
 function CarritoTotal(){
   let Total = 0;
   const itemCartTotal = document.querySelector('.itemCartTotal')
@@ -103,6 +122,8 @@ function CarritoTotal(){
   itemCartTotal.innerHTML = `Total $${Total}`
   addLocalStorage()
 }
+
+//Elimina Item del carrito
 
 function removeItemCarrito(e){
   const buttonDelete = e.target
@@ -126,6 +147,8 @@ function removeItemCarrito(e){
   CarritoTotal()
 }
 
+//Suma un Item ya agregado al Carrito
+
 function sumaCantidad(e){
   const sumaInput  = e.target
   const tr = sumaInput.closest(".ItemCarrito")
@@ -138,6 +161,8 @@ function sumaCantidad(e){
     }
   })
 }
+
+//Funcionalidad de tocar boton de compra
 
 function comprarButtonClicked(){
   tbody.innerHTML = "";
